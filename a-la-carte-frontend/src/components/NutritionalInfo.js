@@ -3,7 +3,10 @@ import Header from './Header'
 import { connect } from 'react-redux'
 import './NutritionalInfo.css'
 
-const nutritionOne = require('../assets/images/nutrition-1.jpg')
+// Dispatches
+import { setAllergies } from '../actions/setAllergies'
+import { setCalories } from '../actions/setCalories'
+import { setMeals } from '../actions/setMeals'
 
 class NutritionalInfo extends Component {
   handleSubmit = e => {
@@ -60,4 +63,12 @@ class NutritionalInfo extends Component {
   }
 }
 
-export default connect(null, null)(NutritionalInfo)
+const mapDispatchToProps = dispatch => {
+  return {
+    setAllergies: allergies => { dispatch(setAllergies(allergies)) },
+    setCalories: calories => { dispatch(setCalories(calories)) },
+    setMeals: meals => { dispatch(setMeals(meals)) }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(NutritionalInfo)
