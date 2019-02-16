@@ -12,7 +12,6 @@
 }
 
 .image-filler {
-  height: 100vh;
   background-image: url('../assets/images/nutrition-1.jpg');
   background-size: 100vh;
   background-attachment: fixed
