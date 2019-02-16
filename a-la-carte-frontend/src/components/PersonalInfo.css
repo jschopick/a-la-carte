@@ -1,0 +1,32 @@
+.title {
+  font-family: "Pacifico";
+  color: #505050;
+  text-align: center;
+  margin-bottom: 20%
+}
+
+.info-caption {
+  font-family: "Varela Round", sans-serif;
+  color: #505050
+}
+
+.personal-info-form-container {
+  width: 30%;
+  margin: 0 auto
+}
+
+.form-control {
+  font-family: "Varela Round", sans-serif;
+  margin-bottom: 10%;
+  border: none;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.158), 0 4px 10px 0 rgba(145, 145, 145, 0.19);
+}
+
+#years, #weight {
+  width: 70%
+}
+
+#submit-button {
+  margin-top: 5%;
+  border-radius: 10px
+}
