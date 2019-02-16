@@ -26,7 +26,7 @@ class PersonalInfo extends Component {
     this.props.setFeet(feet)
     this.props.setInches(inches)
 
-    window.location.href="/nutritional-info"
+    this.props.history.push("/nutritional-info")
   }
 
   render() {

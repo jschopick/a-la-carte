@@ -58,6 +58,7 @@ const rootReducer = (state = initState, action) => {
       allergies: action.allergies
     }
   }
+
   return state
 }
 
