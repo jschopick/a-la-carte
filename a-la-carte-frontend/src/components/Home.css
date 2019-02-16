@@ -1,0 +1,23 @@
+.logo-container {
+  text-align: center
+}
+
+#logo {
+  width: 40%;
+  margin-top: 10%
+}
+
+.begin-container {
+  text-align: center;
+  margin-top: 10%
+}
+
+.btn-primary {
+  background-color: #D9393E;
+  border: none;
+  font-family: 'Varela Round', sans-serif;
+}
+
+.btn:hover {
+  background-color: rgb(161, 45, 49);
+}
