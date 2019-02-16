@@ -1,0 +1,19 @@
+.nutritional-info-form-container {
+  width: 70%;
+  margin: 0 auto
+}
+
+#total-calories {
+  width: 40%
+}
+
+#meals {
+  width: 50%
+}
+
+.image-filler {
+  height: 100vh;
+  background-image: url('../assets/images/nutrition-1.jpg');
+  background-size: 100vh;
+  background-attachment: fixed
+}
