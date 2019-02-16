@@ -23,9 +23,9 @@ class NutritionalInfo extends Component {
     this.props.setCalories(calories)
     this.props.setAllergies(allergies)
     this.props.setMeals(meals)
-
-    console.log(this.props.content)
   }
+
+  //fat, protein, carbs (macro distribution)
 
   render() {
     return (

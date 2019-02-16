@@ -9,6 +9,7 @@ import { setAge } from '../actions/setAge'
 import { setWeight } from '../actions/setWeight'
 import { setFeet } from '../actions/setFeet'
 import { setInches } from '../actions/setInches'
+import { setActivity } from '../actions/setActivity'
 
 class PersonalInfo extends Component {
   handleSubmit = e => {
@@ -19,12 +20,14 @@ class PersonalInfo extends Component {
     let weight = e.target.weight.value
     let feet = e.target.feet.value
     let inches = e.target.inches.value
+    let activity = e.target.activity.value
 
     this.props.setGender(gender)
     this.props.setAge(years)
     this.props.setWeight(weight)
     this.props.setFeet(feet)
     this.props.setInches(inches)
+    this.props.setActivity(activity)
 
     this.props.history.push("/nutritional-info")
   }
@@ -80,8 +83,13 @@ class PersonalInfo extends Component {
                       </div>
                       <div class="row">
                         <div className="col-md-8">
-                          <p className="info-caption">Activity level? (days of exercise)</p>
-                          <input className="form-control" id="weight" type="text" name="weight" placeholder="Weight..."/>
+                          <p className="info-caption">What's your activity level?</p>
+                          <select className="form-control" name="activity" id="activity">
+                            <option>Little to no exercise</option>
+                            <option>Lightly active (1 - 3 days/week)</option>
+                            <option>Moderately active (3 - 5 days/week)</option>
+                            <option>Very active (6 - 7 days/week)</option>
+                          </select>
                         </div>
                       </div>
                       <div className="row justify-content-center">
@@ -105,7 +113,8 @@ const mapDispatchToProps = dispatch => {
     setWeight: weight => { dispatch(setWeight(weight)) },
     setAge: age => { dispatch(setAge(age)) },
     setFeet: feet => { dispatch(setFeet(feet)) },
-    setInches: inches => { dispatch(setInches(inches)) }
+    setInches: inches => { dispatch(setInches(inches)) },
+    setActivity: activity => { dispatch(setActivity(activity)) }
   }
 }
 

@@ -58,6 +58,12 @@ const rootReducer = (state = initState, action) => {
       allergies: action.allergies
     }
   }
+  else if (action.type === "SET_ACTIVITY") {
+    return {
+      ...state,
+      activity: action.activity
+    }
+  }
 
   return state
 }
