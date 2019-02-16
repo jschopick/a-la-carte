@@ -7,19 +7,44 @@ const url = 'http://138.23.12.141/foodpro/shortmenu.asp?sName=University+of+Cali
 rp(url)
     .then(function(html) {
         // Success
-        // let pathToFoods = 'div > div > table > tbody > tr > td > table > tbody > tr > td > table';
         let pathToFoods = 'table > tbody > tr > td > div > span';
-        // let pathToFoods = 'tr > td > div > span > a';
         let pathLength = $(pathToFoods, html).length;
         const mealOptions = [];
         for(let i = 0; i < pathLength; i++) {
-            let raw = $(pathToFoods, html)[i].children[0].data;
-            mealOptions.push(raw);
+            let rawHTML = $(pathToFoods, html)[i].children[0];
+            mealOptions.push(rawHTML);
         }
         const breakfast = [];
-        console.log("Number of meal options: " + pathLength);
-        console.log("Today's menu");
-        console.log(mealOptions);
+        const lunch = [];
+        const dinner = [];
+        let count = 0;
+        // Split into Breakfast, Lunch, and Dinner
+        mealOptions.forEach(function(element) {
+            if(element.data === '-- Soup & Deli Bar --') {
+                count++;
+            }
+            if(element.name === 'a') {
+                if(count === 0) {
+                    breakfast.push(element.children[0].data);
+                } else if(count === 1) {
+                    lunch.push(element.children[0].data);
+                } else {
+                    dinner.push(element.children[0].data);
+                }
+            }
+        });
+        
+        console.log("Number of Breakfast Options: " + breakfast.length);
+        console.log("Breakfast: ");
+        console.log(breakfast);
+
+        console.log("Number of Lunch Options: " + lunch.length);
+        console.log("Lunch:");
+        console.log(lunch);
+
+        console.log("Number of Dinner Options: " + dinner.length);
+        console.log("Dinner:");
+        console.log(dinner);
     }).catch(function(err) {
         // Error
         console.log("Could not get web page");
