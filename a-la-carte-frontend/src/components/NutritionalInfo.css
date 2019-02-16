@@ -16,3 +16,20 @@
   background-size: 100vh;
   background-attachment: fixed
 }
+
+textarea {
+  height: auto
+}
+
+#macro-distribution {
+  margin-bottom: -2%
+}
+
+.percentage-container {
+  margin-bottom: 10%
+}
+
+.percentage {
+  font-family: 'Varela Round', sans-serif;
+  color: #505050
+}
