@@ -26,6 +26,10 @@
 .food-items {
   font-family: "Valera Round", sans-serif;
   text-align: center;
-  white-space: pre-wrap;
-  color: #505050
+  color: #505050;
+  font-size: 95%
+}
+
+.meal-container {
+  height: 158px
 }
