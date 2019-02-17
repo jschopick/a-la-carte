@@ -8,8 +8,8 @@ export default class Card extends Component {
     for (let i = 0; i < foods.length - 1; ++i) {
       foodItems += foods[i][0] + "(" +  foods[i][1] + "g) "
     }
-    // return foodItems.split(" ").join(", ").substring(0, foodItems.length - 1)
-    return foodItems.split(" ").join(", ") + foods[foods.length - 1][0] + "(" +  foods[foods.length - 1][1] + ") "
+
+    return foodItems.split(" ").join(", ") + foods[foods.length - 1][0] + "(" +  foods[foods.length - 1][1] + "g) "
   }
 
   render () {

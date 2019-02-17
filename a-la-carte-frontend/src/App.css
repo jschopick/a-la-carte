@@ -3,3 +3,8 @@
   height: 100vh;
   overflow: auto
 }
+
+.btn {
+  border-radius: 15px;
+  font-family: "Varela Round", sans-serif
+}

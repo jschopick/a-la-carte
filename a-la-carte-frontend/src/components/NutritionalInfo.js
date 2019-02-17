@@ -35,7 +35,7 @@ class NutritionalInfo extends Component {
     let proteins;
     let carbohydrates;
 
-    if (this.props.experience === "beginner") {
+    if (this.props.experience == "beginner") {
       goalWeight = e.target.goalWeight.value
       if (!goalWeight) {
         toast.error("Enter a target weight!")
@@ -46,7 +46,7 @@ class NutritionalInfo extends Component {
         return
       }
     }
-    else if (this.props.experience === "expert") {
+    else if (this.props.experience == "expert") {
       calories = e.target.totalCalories.value
       fats = this.state.fats
       proteins = this.state.proteins
@@ -86,25 +86,40 @@ class NutritionalInfo extends Component {
     this.props.setProteins(proteins)
     this.props.setCarbohydrates(carbohydrates)
 
+    console.log({
+      weight: this.props.weight,
+      gender: this.props.gender,
+      age: this.props.age,
+      feet: this.props.feet,
+      inches: this.props.inches,
+      calories: calories,
+      meals: meals,
+      allergies: allergies,
+      experience: this.props.experience,
+      goalWeight,
+      fats,
+      proteins,
+      carbohydrates,
+      activity: this.props.activity
+    })
+
     axios.post("http://localhost:8000/api/userinfo", {
       weight: this.props.weight,
       gender: this.props.gender,
       age: this.props.age,
       feet: this.props.feet,
       inches: this.props.inches,
-      calories: this.props.calories,
-      meals: this.props.meals,
-      allergies: this.props.allergies,
+      calories: calories,
+      meals: meals,
+      allergies: allergies,
       experience: this.props.experience,
-      goalWeight: this.props.goalWeight,
-      fats: this.props.fats,
-      proteins: this.props.proteins,
-      carbohydrates: this.props.carbohydrates,
+      goalWeight,
+      fats,
+      proteins,
+      carbohydrates,
       activity: this.props.activity
     }).then(res => console.log(res))
     .catch(err => console.log(err))
-
-    console.log(this.props.content)
   }
 
   //fat, protein, carbs (macro distribution)

@@ -6,6 +6,7 @@
     "@sendgrid/mail": "^6.3.1",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
+    "email-validator": "^2.0.4",
     "html2canvas": "^1.0.0-alpha.12",
     "mdbootstrap": "^4.7.1",
     "mdbreact": "^4.10.0",

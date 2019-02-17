@@ -9,3 +9,31 @@
 #restart-button {
   font-family: "Varela Round", sans-serif
 }
+
+.modal-container {
+  margin-top: 20%
+}
+
+.email-modal {
+  margin-top: 15%
+}
+
+.email-header {
+  font-family: "Pacifico";
+  font-size: 150%;
+  color: #505050
+}
+
+#email-input {
+  box-shadow: none;
+  margin-bottom: 4%
+}
+
+.submit-email-container {
+  text-align: center
+}
+
+#submit-email {
+  font-family: "Varela Round," sans-serif;
+  border-radius: 15px
+}

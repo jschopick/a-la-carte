@@ -56,7 +56,7 @@ class Experience extends Component {
                     </ButtonGroup>
                   </div>
                   <div className="row justify-content-center">
-                    <button id="experience-next" type="submit" onClick={ this.handleClick } className="btn btn-primary">Next</button>
+                    <button id="experience-next" type="submit" onClick={ this.handleClick } className="btn btn-danger">Next</button>
                   </div>
                 </div>
                 <div className="col-md-4 image-filler-experience" id="special"></div>

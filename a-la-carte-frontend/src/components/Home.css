@@ -15,12 +15,6 @@
 .btn-primary {
   background-color: #D9393E;
   border: none;
-  font-family: 'Varela Round', sans-serif;
-  border-radius: 15px
-}
-
-.btn:hover {
-  background-color: rgb(161, 45, 49);
 }
 
 .home-container {
@@ -29,4 +23,10 @@
   height: 100vh;
   background-repeat: no-repeat;
   overflow: auto
+}
+
+#slogan {
+  font-family: "Pacifico";
+  color: #505050;
+  text-align: center
 }
