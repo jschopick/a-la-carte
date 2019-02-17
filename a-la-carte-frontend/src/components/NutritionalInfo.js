@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Header from './Header'
 import { connect } from 'react-redux'
 import MultiSlider from "multi-slider";
+import axios from 'axios'
 import './NutritionalInfo.css'
 
 // Dispatches
@@ -71,7 +72,23 @@ class NutritionalInfo extends Component {
       //    gender, weight, feet, inches, age, activity level, calories, fats, proteins, carbohydrates, allergies
     }
 
-
+    axios.post("http://localhost:8000/api/userinfo", {
+      weight: this.props.weight,
+      gender: this.props.gender,
+      age: this.props.age,
+      feet: this.props.feet,
+      inches: this.props.inches,
+      calories: this.props.calories,
+      meals: this.props.meals,
+      allergies: this.props.allergies,
+      experience: this.props.experience,
+      goalWeight: this.props.goalWeight,
+      fats: this.props.fats,
+      proteins: this.props.proteins,
+      carbohydrates: this.props.carbohydrates,
+      activity: this.props.activity
+    }).then(res => console.log(res))
+    .catch(err => console.log(err))
 
     console.log(this.props.content)
   }
@@ -161,8 +178,20 @@ class NutritionalInfo extends Component {
 const mapStateToProps = state => {
   return {
     content: state,
+    weight: state.weight,
+    gender: state.gender,
+    age: state.age,
+    feet: state.feet,
+    inches: state.inches,
+    calories: state.calories,
+    meals: state.meals,
+    allergies: state.allergies,
     experience: state.experience,
-    gender: state.gender
+    goalWeight: state.goalWeight,
+    fats: state.fats,
+    proteins: state.proteins,
+    carbohydrates: state.carbohydrates,
+    activity: state.activity
   }
 }
 

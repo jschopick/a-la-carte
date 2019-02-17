@@ -4,7 +4,7 @@ import './Card.css'
 const Card = props => {
   return (
     <div className="card-container">
-      <h1 className="restaurant-name">Restaurant</h1>
+      <h1 className="restaurant-name">{ props.name }</h1>
       <div className="breakfast-container">
         <div className="row justify-content-center">
           <div class="meal-container">

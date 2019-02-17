@@ -1,3 +1,11 @@
 .card-group-container {
   margin-top: 4%
 }
+
+.restart-container {
+  margin-top: 2%
+}
+
+#restart-button {
+  font-family: "Varela Round", sans-serif
+}
