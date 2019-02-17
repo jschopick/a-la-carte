@@ -1,0 +1,38 @@
+.experience-container {
+  height: 100vh
+}
+
+.radio-container {
+  height: 100vh
+}
+
+.radio {
+  box-shadow: none
+}
+
+.image-filler-experience {
+  background-image: url('../assets/images/nutrition-1.jpg');
+  height: 100vh;
+  background-size: 100vh;
+  background-attachment: fixed
+}
+
+#macro-caption {
+  margin-top: 10%
+}
+
+.experience-button {
+  font-family: "Varela Round", sans-serif;
+  color: rgb(161, 45, 49);
+  border-color: rgb(161, 45, 49);
+  background-color: #FFFFFF;
+  border-width: 2px
+}
+
+.experience-button:hover {
+  background-color: rgb(161, 45, 49);
+}
+
+#experience-next {
+  margin-top: 10%
+}

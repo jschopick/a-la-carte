@@ -1,0 +1,26 @@
+.card-container {
+  height: 80vh;
+  border: 4px solid #CE3E3E;
+  margin: 0 8%;
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.158), 0 15px 20px 0 rgba(94, 94, 94, 0.19);
+}
+
+.restaurant-name {
+  text-align: center;
+  font-family: "Pacifico";
+  color: #CE3E3E;
+  margin-top: 2%
+}
+
+.meal-name {
+  font-family: "Varela Round", sans-serif;
+  color: #505050;
+  letter-spacing: 10px;
+  font-weight: bold
+}
+
+.meal-container {
+  height: 158px
+}

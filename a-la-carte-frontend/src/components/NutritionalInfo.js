@@ -8,6 +8,10 @@ import './NutritionalInfo.css'
 import { setAllergies } from '../actions/setAllergies'
 import { setCalories } from '../actions/setCalories'
 import { setMeals } from '../actions/setMeals'
+import { setGoalWeight } from '../actions/setGoalWeight'
+import { setFats } from '../actions/setFats'
+import { setProteins } from '../actions/setProteins'
+import { setCarbohydrates } from '../actions/setCarbohydrates'
 
 const colors = ["#FCBD7E", "#EB9F71", "#E6817C"]
 
@@ -19,10 +23,30 @@ class NutritionalInfo extends Component {
     carbohydrates: 34
   }
 
+  submitFix = e => {
+    this.handleSubmit(e)
+    setTimeout(this.handleSubmit(e), 3000)
+  }
+
   handleSubmit = e => {
     e.preventDefault()
-    
-    let calories = e.target.totalCalories.value
+
+    let goalWeight;
+    let calories;
+    let fats;
+    let proteins;
+    let carbohydrates;
+
+    if (this.props.experience == "beginner") {
+      goalWeight = e.target.goalWeight.value
+    }
+    else if (this.props.experience == "expert") {
+      calories = e.target.totalCalories.value
+      fats = this.state.fats
+      proteins = this.state.proteins
+      carbohydrates = this.state.carbohydrates
+    }
+
     let meals = e.target.meals.value
     let allergies = e.target.allergies.value.split(", ") // ex. Nuts, peanuts, bananas
     
@@ -33,6 +57,23 @@ class NutritionalInfo extends Component {
     this.props.setCalories(calories)
     this.props.setAllergies(allergies)
     this.props.setMeals(meals)
+    this.props.setGoalWeight(goalWeight)
+    this.props.setFats(fats)
+    this.props.setProteins(proteins)
+    this.props.setCarbohydrates(carbohydrates)
+
+    if (this.props.experience == "beginner") {
+      // Send a post request with:
+      //    gender, weight, feet, inches, age, activity level, goal weight, meals, allergies
+    }
+    else {
+      // Send a post request with:
+      //    gender, weight, feet, inches, age, activity level, calories, fats, proteins, carbohydrates, allergies
+    }
+
+
+
+    console.log(this.props.content)
   }
 
   //fat, protein, carbs (macro distribution)
@@ -53,16 +94,16 @@ class NutritionalInfo extends Component {
               <Header/>
               <div class="row justify-content-center">
                 <div className="nutritional-info-title-container">
-                    <h1 className="title">Nutritional Info</h1>
-                  </div>
+                  <h1 className="title">Nutritional Info</h1>
+                </div>
               </div>
               <div class="nutritional-info-form-container">
-                <form className="nutritional-info-form" onSubmit={ this.handleSubmit }>
+                <form className="nutritional-info-form" onSubmit={ this.submitFix }>
                   <div class="row">
-                    <div className="col-md-12">
+                    { this.props.experience == "expert" && <div className="col-md-12">
                       <p className="info-caption">Enter your preferred total calories for the day.</p>
                       <input className="form-control" id="total-calories" name="totalCalories" type="text" placeholder="Total calories..."/>
-                    </div>
+                    </div> }
                   </div>
                   <div class="row">
                     <div className="col-md-12">
@@ -70,36 +111,46 @@ class NutritionalInfo extends Component {
                       <input className="form-control" id="meals" name="meals" type="text" placeholder="Number of meals..."/>
                     </div>
                   </div>
-                  <div className="row">
+                  { this.props.experience == "beginner" && <div class="row">
                     <div className="col-md-12">
-                      <p className="info-caption" id="macro-distribution">Macro Distribution</p>
-                      <MultiSlider
-                        colors={ colors }
-                        values={ this.state.values }
-                        onChange={ this.onChange }
-                      />
+                      <p className="info-caption">Set your target weight (lbs).</p>
+                      <input className="form-control" id="goal-weight" name="goalWeight" type="text" placeholder="Target weight..."/>
                     </div>
-                  </div>
-                  <div class="percentage-container">
+                  </div> }
+                  { this.props.experience == "expert" && <div class="macro-container">
                     <div className="row">
-                      <div className="col-md-4 percentage">Fats: { this.state.fats }%</div>
-                      <div className="col-md-4 percentage">Proteins: { this.state.proteins }%</div>
-                      <div className="col-md-4 percentage">Carbohydrates: { this.state.carbohydrates }%</div>
+                      <div className="col-md-12">
+                        <p className="info-caption" id="macro-distribution">Macro Distribution</p>
+                        <MultiSlider
+                          colors={ colors }
+                          values={ this.state.values }
+                          onChange={ this.onChange }
+                        />
+                      </div>
                     </div>
-                  </div>
+                    <div class="percentage-container">
+                      <div className="row">
+                        <div className="col-md-4 percentage">Fats: { this.state.fats }%</div>
+                        <div className="col-md-4 percentage">Proteins: { this.state.proteins }%</div>
+                        <div className="col-md-4 percentage">Carbohydrates: { this.state.carbohydrates }%</div>
+                      </div>
+                    </div>
+                  </div> }
                   <div class="row">
                     <div className="col-md-12">
-                      <p className="info-caption">Any allergies? (Separate items by comma)</p>
-                      <textarea class="form-control" placeholder="Enter your allergies here..." id="allergies" name="allergies" rows="3"></textarea>
+                      <div class="allergies-container">
+                        <p className="info-caption">Any allergies? (Separate items by comma)</p>
+                        <textarea class="form-control" placeholder="Enter your allergies here..." id="allergies" name="allergies" rows="3"></textarea>
+                      </div>
                     </div>
                   </div>
                   <div className="row justify-content-center">
-                    <button id="submit-button" type="submit" className="btn btn-primary">Submit</button>
+                    <button id="submit-button" type="submit" className="btn btn-danger">Submit</button>
                   </div>
                 </form>
               </div>
             </div>
-            <div className="col-md-4 image-filler"></div>
+            <div className="col-md-4 image-filler-nutritional"></div>
           </div>
         </div>
       </div>
@@ -110,14 +161,8 @@ class NutritionalInfo extends Component {
 const mapStateToProps = state => {
   return {
     content: state,
-    gender: state.gender,
-    age: state.age,
-    weight: state.weight,
-    feet: state.feet,
-    inches: state.inches,
-    meals: state.meals,
-    calories: state.calories,
-    allergies: state.allergies
+    experience: state.experience,
+    gender: state.gender
   }
 }
 
@@ -125,7 +170,11 @@ const mapDispatchToProps = dispatch => {
   return {
     setAllergies: allergies => { dispatch(setAllergies(allergies)) },
     setCalories: calories => { dispatch(setCalories(calories)) },
-    setMeals: meals => { dispatch(setMeals(meals)) }
+    setMeals: meals => { dispatch(setMeals(meals)) },
+    setGoalWeight: goalWeight => { dispatch(setGoalWeight(goalWeight)) },
+    setFats: fats => { dispatch(setFats(fats)) },
+    setProteins: proteins => { dispatch(setProteins(proteins)) },
+    setCarbohydrates: carbohydrates => { dispatch(setCarbohydrates(carbohydrates)) }
   }
 }
 

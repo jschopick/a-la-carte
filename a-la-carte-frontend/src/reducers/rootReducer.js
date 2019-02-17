@@ -6,7 +6,12 @@ const initState = {
   inches: undefined,
   calories: undefined,
   meals: undefined,
-  allergies: undefined
+  allergies: undefined,
+  experience: undefined,
+  goalWeight: undefined,
+  fats: undefined,
+  proteins: undefined,
+  carbohydrates: undefined
 }
 
 const rootReducer = (state = initState, action) => {
@@ -62,6 +67,36 @@ const rootReducer = (state = initState, action) => {
     return {
       ...state,
       activity: action.activity
+    }
+  }
+  else if (action.type === "SET_EXPERIENCE") {
+    return {
+      ...state,
+      experience: action.experience
+    }
+  }
+  else if (action.type === "SET_GOALWEIGHT") {
+    return {
+      ...state,
+      goalWeight: action.goalWeight
+    }
+  }
+  else if (action.type === "SET_FATS") {
+    return {
+      ...state,
+      fats: action.fats
+    }
+  }
+  else if (action.type === "SET_PROTEINS") {
+    return {
+      ...state,
+      proteins: action.proteins
+    }
+  }
+  else if (action.type === "SET_CARBOHYDRATES") {
+    return {
+      ...state,
+      carbohydrates: action.carbohydrates
     }
   }
 
