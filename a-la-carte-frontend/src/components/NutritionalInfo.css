@@ -11,12 +11,6 @@
   width: 50%
 }
 
-.image-filler {
-  background-image: url('../assets/images/nutrition-1.jpg');
-  background-size: 100vh;
-  background-attachment: fixed
-}
-
 textarea {
   height: auto
 }
@@ -32,4 +26,19 @@ textarea {
 .percentage {
   font-family: 'Varela Round', sans-serif;
   color: #505050
+}
+
+.image-filler-nutritional {
+  background-image: url('../assets/images/nutrition-1.jpg');
+  height: 130vh;
+  background-size: 100vh;
+  background-attachment: fixed
+}
+
+.nutritional-info-container {
+  height: 100vh;
+}
+
+#submit-button {
+  font-family: 'Varela Round', sans-serif;
 }

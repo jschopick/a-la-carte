@@ -29,7 +29,7 @@ class PersonalInfo extends Component {
     this.props.setInches(inches)
     this.props.setActivity(activity)
 
-    this.props.history.push("/nutritional-info")
+    this.props.history.push("/experience")
   }
 
   render() {
@@ -93,12 +93,12 @@ class PersonalInfo extends Component {
                         </div>
                       </div>
                       <div className="row justify-content-center">
-                        <button id="submit-button" type="submit" className="btn btn-primary">Next</button>
+                        <button id="submit-button" type="submit" className="btn btn-danger">Next</button>
                       </div>
                     </form>
                   </div>
                 </div>
-                <div className="col-md-4 image-filler"></div>
+                <div className="col-md-4 image-filler-personal"></div>
               </div>
           </div>
         </div>

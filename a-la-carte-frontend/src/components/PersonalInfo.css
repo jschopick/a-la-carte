@@ -29,13 +29,16 @@
 
 #submit-button {
   border-radius: 10px;
-  margin-bottom: 10%;
-}
-
-.image-filler {
-  background-image: url('../assets/images/nutrition-1.jpg');
+  margin-bottom: 5%;
 }
 
 .personal-info-container {
-  height: 110vh
+  height: 100vh
+}
+
+.image-filler-personal {
+  background-image: url('../assets/images/nutrition-1.jpg');
+  height: 120vh;
+  background-size: 100vh;
+  background-attachment: fixed
 }

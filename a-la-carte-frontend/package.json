@@ -3,13 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
+    "mdbootstrap": "^4.7.1",
+    "mdbreact": "^4.10.0",
     "multi-slider": "^4.1.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
+    "react-radio-buttons": "^1.2.2",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.5",
+    "reactstrap": "^7.1.0",
     "redux": "^4.0.1"
   },
   "scripts": {
