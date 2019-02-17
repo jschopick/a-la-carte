@@ -8,6 +8,8 @@ const day = today.getDate() + 3; // Get tomorrow's date
 const month = today.getMonth() + 1;
 const year = today.getFullYear();
 
+let returnValue = JSON.parse('[]');
+
 const lothianURL = 'http://138.23.12.141/foodpro/shortmenu.asp?sName=University+of+California%2C+Riverside+Dining+Services&locationNum=02&locationName=Lothian+Residential+Restaurant&naFlag=1&WeeksMenus=This+Week%27s+Menus&myaction=read&dtdate=' + month + '%2F' + day + '%2F' + year;
 
 const aiURL = 'http://138.23.12.141/foodpro/shortmenu.asp?sName=University+of+California%2C+Riverside+Dining+Services&locationNum=03&locationName=A+-+I+Residential+Restaurant&naFlag=1&WeeksMenus=This+Week%27s+Menus&myaction=read&dtdate=' + month + '%2F' + day + '%2F' + year;
@@ -18,38 +20,52 @@ let AIMenu = JSON.parse('{"breakfast":[], "lunch": [], "dinner" : []}')
 let Database = null;
 
 getMenu();
-//USER INFO
-let usr = JSON.parse('{' +
-    '"activity": "Lightly active (1 - 3 days/week)",' +
-    '"age": "21",' +
-    '"allergies": ["peanuts"],' +
-    '"calories": "2000",' +
-    '"carbohydrates": 34,' +
-    '"experience": "beginner",' +
-    '"fats": 33,' +
-    '"feet": "5",' +
-    '"gender": "Male",' +
-    '"goalWeight": "100",' +
-    '"inches": "7",' +
-    '"meals": "3",' +
-    '"proteins": 33,' +
-    '"weight": "130"' +
-    '}')
+// //USER INFO
+// let usr = JSON.parse('{' +
+//     '"activity": "Lightly active (1 - 3 days/week)",' +
+//     '"age": "21",' +
+//     '"allergies": ["peanuts"],' +
+//     '"calories": "2000",' +
+//     '"carbohydrates": 34,' +
+//     '"experience": "beginner",' +
+//     '"fats": 33,' +
+//     '"feet": "5",' +
+//     '"gender": "Male",' +
+//     '"goalWeight": "100",' +
+//     '"inches": "7",' +
+//     '"meals": "3",' +
+//     '"proteins": 33,' +
+//     '"weight": "130"' +
+//     '}')
 
-//console.log(usr)
+let info = {
+  weight: '130',
+  gender: 'Male',
+  age: '21',
+  feet: '5',
+  inches: '7',
+  calories: '2000',
+  meals: '3',
+  allergies: [ '' ],
+  experience: 'expert',
+  goalWeight:'100',
+  fats: 33,
+  proteins: 33,
+  carbohydrates: 34,
+  activity: 'Little to no exercise'
+}
 
-
+console.log(JSON.stringify(info));
+let usr = info;
+if(usr.allergies[0] === '') {
+    usr.allergies[0] = 'xyz';
+}
 
 function getMenu() {
     console.log("REACH LOTHIAN SEARCH")
     parse(lothianURL, "Lothian",function () {
-        //console.log("Lothian Menu")
-        //console.log(LothianMenu)
-
         console.log("REACH AI SEARCH")
         parse(aiURL, "AI", function () {
-            //console.log("AI Menu");
-            //console.log(AIMenu);
             retrieveDatabase();
         });
     });
@@ -57,16 +73,15 @@ function getMenu() {
 
 function retrieveDatabase(callback){
     let sql = "SELECT * FROM UCRDining";
-    if(AIMenu.breakfast !== null) {
+    if(AIMenu.breakfast !== null || LothianMenu.breakfast !== null) {
         connection.connect(function (err) {
             if (err) throw err;
             connection.query(sql, function (err, result, fields) {
                 if (err) throw err;
-                //console.log(result);
                 Database = result;
-                //console.log(Database);
                 returnMealAI();
                 returnMealLothian();
+                console.log(JSON.stringify(returnValue));
             });
         });
     }
@@ -116,16 +131,7 @@ function parse(url, location,callback) {
                 }
             });
 
-            if((breakfast.length !== 0 || lunch.length !== 0 || dinner.length !== 0) && location === "Lothian") {
-                //console.log("Lothian Menu for " + month + "/" + day + "/" + year);
-            } else if((breakfast.length !== 0 || lunch.length !== 0 || dinner.length !== 0) && location === "AI"){
-                //console.log("AI Menu for " + month + "/" + day + "/" + year);
-            }
-
             if(breakfast.length !== 0) {
-                //console.log("Number of Breakfast Options: " + breakfast.length);
-                //console.log("Breakfast: ");
-                //console.log(breakfast);
                 if((breakfast.length !== 0 || lunch.length !== 0 || dinner.length !== 0) && location === "Lothian") {
                     LothianMenu.breakfast = breakfast;
                 } else if((breakfast.length !== 0 || lunch.length !== 0 || dinner.length !== 0) && location === "AI"){
@@ -134,9 +140,6 @@ function parse(url, location,callback) {
             }
 
             if(lunch.length !== 0) {
-                //console.log("Number of Lunch Options: " + lunch.length);
-                //console.log("Lunch:");
-                //console.log(lunch);
                 if((breakfast.length !== 0 || lunch.length !== 0 || dinner.length !== 0) && location === "Lothian") {
                     LothianMenu.lunch = lunch;
                 } else if((breakfast.length !== 0 || lunch.length !== 0 || dinner.length !== 0) && location === "AI"){
@@ -145,9 +148,6 @@ function parse(url, location,callback) {
             }
 
             if(dinner.length !== 0) {
-                //console.log("Number of Dinner Options: " + dinner.length);
-                //console.log("Dinner:");
-                //console.log(dinner);
                 if((breakfast.length !== 0 || lunch.length !== 0 || dinner.length !== 0) && location === "Lothian") {
                     LothianMenu.dinner = dinner;
                 } else if((breakfast.length !== 0 || lunch.length !== 0 || dinner.length !== 0) && location === "AI"){
@@ -160,7 +160,7 @@ function parse(url, location,callback) {
         // Error
         callback();
         console.log("Could not get web page");
-
+        console.log(err);
     });
 }
 
@@ -211,25 +211,20 @@ function returnMealAI() {
             }
         }
         if(parseInt(usr.goalWeight) < parseInt(usr.weight)){
-            usr.calories = totalCalories - 500
+            usr.calories = totalCalories - 500;
         }else if (parseInt(usr.goalWeight) === parseInt(usr.weight)){
-            usr.calories = totalCalories
+            usr.calories = totalCalories;
         }else{
-            usr.calories = totalCalories+500
+            usr.calories = totalCalories+500;
         }
-
-        //console.log('User Calories')
-        //console.log(totalCalories);
 
         numCaloriesBreakfast = usr.calories * 0.3;
         numCaloriesLunch = usr.calories * 0.3;
         numCaloriesDinner = usr.calories * 0.4;
-        carbRatio = usr.carbohydrates/100;
-        fatRatio = usr.fats/100;
-        proteinRatio = usr.proteins/100;
+        carbRatio = 33/100;
+        fatRatio = 33/100;
+        proteinRatio = 34/100;
     }
-
-
 
     let breakfastOptions = JSON.stringify(AIMenu.breakfast);
     let breakFastArray = JSON.parse('[]');
@@ -238,13 +233,16 @@ function returnMealAI() {
             if((breakfastOptions.includes(Database[i].foodName))){
                 let temp = Database[i]
                 let include = true
-                for(let j=0; j < usr.allergies.length; j++){
-                    if((temp.ingredients.toLowerCase()).includes(usr.allergies[j])){
-                        if(include === true){
-                            include = false
+                //console.log(JSON.stringify(usr.allergies))
+                // if(JSON.stringify(usr.allergies).includes('[""]')) {
+                    for(let j=0; j < usr.allergies.length; j++){
+                        if((temp.ingredients.toLowerCase()).includes(usr.allergies[j])){
+                            if(include === true){
+                                include = false
+                            }
                         }
                     }
-                }
+                // }
                 if(include === true){
                     breakFastArray.push(temp)
                 }
@@ -254,14 +252,7 @@ function returnMealAI() {
         let idealFat = (numCaloriesBreakfast * fatRatio) / 9;
         let idealProtein = (numCaloriesBreakfast * proteinRatio) / 4;
 
-        //console.log(idealCarb);
-        //console.log(idealFat);
-        //console.log(idealProtein);
-
         breakfastMeal = mealForwardSelection(breakFastArray, idealCarb, idealFat, idealProtein);
-
-        //console.log(breakfastMeal);
-
     }
 
     let lunchOptions = JSON.stringify(AIMenu.lunch);
@@ -287,14 +278,7 @@ function returnMealAI() {
         let idealFat = (numCaloriesLunch * fatRatio) / 9;
         let idealProtein = (numCaloriesLunch * proteinRatio) / 4;
 
-        //console.log(idealCarb);
-        //console.log(idealFat);
-        //console.log(idealProtein);
-
         lunchMeal = mealForwardSelection(lunchArray, idealCarb, idealFat, idealProtein);
-
-        //console.log(lunchMeal);
-
     }
 
     let dinnerOptions = JSON.stringify(AIMenu.dinner);
@@ -320,19 +304,14 @@ function returnMealAI() {
         let idealFat = (numCaloriesDinner * fatRatio) / 9;
         let idealProtein = (numCaloriesDinner * proteinRatio) / 4;
 
-        //console.log(idealCarb);
-        //console.log(idealFat);
-        //console.log(idealProtein);
-
         dinnerMeal = mealForwardSelection(dinnerArray, idealCarb, idealFat, idealProtein);
-
-        //console.log(dinnerMeal);
     }
     let ret = JSON.parse('{"breakfast" : [], "lunch": [], "dinner" : []}')
     ret.breakfast = breakfastMeal;
     ret.lunch = lunchMeal;
     ret.dinner = dinnerMeal;
     console.log(ret);
+    returnValue.push(ret);
 }
 
 function returnMealLothian() {
@@ -388,20 +367,17 @@ function returnMealLothian() {
             usr.calories = totalCalories+500
         }
 
-        //console.log('User Calories')
-        //console.log(totalCalories);
-
         numCaloriesBreakfast = usr.calories * 0.3;
         numCaloriesLunch = usr.calories * 0.3;
         numCaloriesDinner = usr.calories * 0.4;
-        carbRatio = usr.carbohydrates/100;
-        fatRatio = usr.fats/100;
-        proteinRatio = usr.proteins/100;
+        carbRatio = 33/100;
+        fatRatio = 33/100;
+        proteinRatio = 34/100;
     }
 
     let breakfastOptions = JSON.stringify(LothianMenu.breakfast);
     let breakFastArray = JSON.parse('[]');
-    if(AIMenu.breakfast !== null){
+    if(LothianMenu.breakfast !== null){
         for(let i = 0; i < Database.length; i++){
             if((breakfastOptions.includes(Database[i].foodName))){
                 let temp = Database[i]
@@ -422,19 +398,12 @@ function returnMealLothian() {
         let idealFat = (numCaloriesBreakfast * fatRatio) / 9;
         let idealProtein = (numCaloriesBreakfast * proteinRatio) / 4;
 
-        //console.log(idealCarb);
-        //console.log(idealFat);
-        //console.log(idealProtein);
-
         breakfastMeal = mealForwardSelection(breakFastArray, idealCarb, idealFat, idealProtein);
-
-        //console.log(breakfastMeal);
-
     }
 
     let lunchOptions = JSON.stringify(LothianMenu.lunch);
     let lunchArray = JSON.parse('[]');
-    if(AIMenu.lunch !== null){
+    if(LothianMenu.lunch !== null){
         for(let i = 0; i < Database.length; i++){
             if((lunchOptions.includes(Database[i].foodName))){
                 let temp = Database[i]
@@ -455,19 +424,12 @@ function returnMealLothian() {
         let idealFat = (numCaloriesLunch * fatRatio) / 9;
         let idealProtein = (numCaloriesLunch * proteinRatio) / 4;
 
-        //console.log(idealCarb);
-        //console.log(idealFat);
-        //console.log(idealProtein);
-
         lunchMeal = mealForwardSelection(lunchArray, idealCarb, idealFat, idealProtein);
-
-        //console.log(lunchMeal);
-
     }
 
     let dinnerOptions = JSON.stringify(LothianMenu.dinner);
     let dinnerArray = JSON.parse('[]');
-    if(AIMenu.dinner !== null){
+    if(LothianMenu.dinner !== null){
         for(let i = 0; i < Database.length; i++){
             if((dinnerOptions.includes(Database[i].foodName))){
                 let temp = Database[i]
@@ -488,21 +450,15 @@ function returnMealLothian() {
         let idealFat = (numCaloriesDinner * fatRatio) / 9;
         let idealProtein = (numCaloriesDinner * proteinRatio) / 4;
 
-        //console.log(idealCarb);
-        //console.log(idealFat);
-        //console.log(idealProtein);
-
         dinnerMeal = mealForwardSelection(dinnerArray, idealCarb, idealFat, idealProtein);
-
-        //console.log(dinnerMeal);
     }
     let ret = JSON.parse('{"breakfast" : [], "lunch": [], "dinner" : []}')
     ret.breakfast = breakfastMeal;
     ret.lunch = lunchMeal;
     ret.dinner = dinnerMeal;
     console.log(ret);
+    returnValue.push(ret);
 }
-
 
 function mealForwardSelection(mealsArray,idealCarb,idealFat,idealProtein){
     let bestTotalError = 999;
@@ -518,7 +474,7 @@ function mealForwardSelection(mealsArray,idealCarb,idealFat,idealProtein){
         let location = 0;
         for(let i = 0; i < mealsArray.length; i++) {
             let obj = mealsArray[i];
-            let error = oneNN(idealCarb, idealFat, idealProtein, totalCarb + obj.carb, totalFat + obj.fat, totalProtein + obj.protein,);
+            let error = oneNN(idealCarb, idealFat, idealProtein, totalCarb + obj.carb, totalFat + obj.fat, totalProtein + obj.protein);
             if(error < bestCurrentError){
                 bestCurrentError = error;
                 currentCarb = totalCarb + obj.carb;
@@ -538,16 +494,11 @@ function mealForwardSelection(mealsArray,idealCarb,idealFat,idealProtein){
             meal.push(temp);
         }
     }while(bestCurrentError <= bestTotalError);
-    //console.log(totalCarb);
-    //console.log(totalFat);
-    //console.log(totalProtein);
-    //console.log(totalCarb*4 + totalFat*9 + totalProtein*4);
     return meal;
 }
 
 
 
 function oneNN(idealCarb,idealFat,idealProtein,checkCarb,checkFat,checkProtein){
-    //return Math.abs(idealCarb - checkCarb) + Math.abs(idealFat - checkFat) + Math.abs(idealProtein - checkProtein);
     return Math.sqrt(Math.pow((idealCarb-checkCarb),2) + Math.pow((idealFat-checkFat),2) + Math.pow((idealProtein-checkProtein),2));
 }
