@@ -3,13 +3,34 @@ import './Card.css'
 
 export default class Card extends Component {
   convertFoodString = foods => {
+    console.log(foods)
+
+    let uniqueFoods = [foods[0]];
+    for (let i = 1; i < foods.length; ++i) {
+      let food = foods[i];
+      let exists = false;
+
+      for (let j = 0; j < uniqueFoods.length; ++j) {
+        if (food.foodName == uniqueFoods[j].foodName) {
+          exists = true;
+          break;
+        }
+      }
+
+      if (!exists) {
+        uniqueFoods.push(food)
+      }
+    }
+
+    console.log(uniqueFoods)
+
     let foodItems = ""
 
-    for (let i = 0; i < foods.length - 1; ++i) {
+    for (let i = 0; i < uniqueFoods.length - 1; ++i) {
       foodItems += foods[i].foodName + " (" +  foods[i].numGrams + "g), "
     }
 
-    foodItems += foods[foods.length - 1].foodName + " (" + foods[foods.length - 1].numGrams + "g)"
+    foodItems += uniqueFoods[uniqueFoods.length - 1].foodName + " (" + uniqueFoods[uniqueFoods.length - 1].numGrams + "g)"
 
     return foodItems
   }
