@@ -59,8 +59,14 @@ class NutritionalInfo extends Component {
 
     if (this.props.experience == "beginner") {
       // Send a post request with:
-      //    gender, weight, feet, inches, age, activity level, 
+      //    gender, weight, feet, inches, age, activity level, goal weight, meals, allergies
     }
+    else {
+      // Send a post request with:
+      //    gender, weight, feet, inches, age, activity level, calories, fats, proteins, carbohydrates, allergies
+    }
+
+    
 
     console.log(this.props.content)
   }
