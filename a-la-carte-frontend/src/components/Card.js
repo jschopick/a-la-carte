@@ -6,9 +6,10 @@ export default class Card extends Component {
     let foodItems = ""
 
     for (let i = 0; i < foods.length; ++i) {
-      foodItems += foods[i][0] + " "
+      foodItems += foods[i][0] + "(" +  foods[i][1] + ") "
     }
-    return foodItems.split(" ").join(", ").substring(0, foodItems.length - 1)
+    // return foodItems.split(" ").join(", ").substring(0, foodItems.length - 1)
+    return foodItems
   }
 
   render () {
