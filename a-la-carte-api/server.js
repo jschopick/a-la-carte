@@ -1,5 +1,6 @@
 var express = require('express'),
   connection = require('./connection'),
+  bodyParser = require('body-parser'),
   app = express(),
   port = process.env.PORT || 8000;
 
@@ -27,6 +28,8 @@ app.use((req, res, next) => {
   // Pass to next layer of middleware
   next();
 });
+
+app.use(bodyParser.json());
 
 // Connect to MySQL Database
 connection.connect(function(err) {
