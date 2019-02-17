@@ -125,6 +125,18 @@ class NutritionalInfo extends Component {
       carbohydrates,
       activity: this.props.activity
     }).then(res => {
+      let ai = res.data[0]
+      let lothian = res.data[1]
+
+      console.log(ai)
+
+      this.props.setAIBreakfast(ai.breakfast)
+      this.props.setAILunch(ai.lunch)
+      this.props.setAIDinner(ai.dinner)
+      this.props.setLothianBreakfast(lothian.breakfast)
+      this.props.setLothianLunch(lothian.lunch)
+      this.props.setLothianDinner(lothian.dinner)
+
       this.props.history.push("/results")
     })
     .catch(err => console.log(err))

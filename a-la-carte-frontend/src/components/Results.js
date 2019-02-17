@@ -71,6 +71,8 @@ class Results extends Component {
       return
     }
 
+    console.log(email)
+
     html2canvas(document.body).then(canvas => {
       axios.post("http://localhost:8000/api/sendemail", {
         to: email,
@@ -79,6 +81,7 @@ class Results extends Component {
         html: '<body><p>You wanted it, you got it! We at A-la-carte hope that we can help you reach your nutrition goals! You will find your meal plan for tomorrow below. Please remember that even though we use high-tech algorithms to create your meal plan, we are not a substitute for professional medical advice.</p><img alt="Meal Plan" src="' + canvas.toDataURL() + '"/></body>'
       }).then(res => {
         console.log(res)
+        this.setState({ modal: false })
       }).catch(err => console.log(err))
     });
   }
