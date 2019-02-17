@@ -11,7 +11,8 @@ const initState = {
   goalWeight: undefined,
   fats: undefined,
   proteins: undefined,
-  carbohydrates: undefined
+  carbohydrates: undefined,
+  activity: undefined
 }
 
 const rootReducer = (state = initState, action) => {
