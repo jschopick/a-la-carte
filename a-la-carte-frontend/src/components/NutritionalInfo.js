@@ -23,13 +23,15 @@ import { setLothianLunch } from '../actions/setLothianLunch'
 import { setLothianDinner } from '../actions/setLothianDinner'
 
 const colors = ["#FCBD7E", "#EB9F71", "#E6817C"]
+const spinner = require('../assets/images/spinner.svg')
 
 class NutritionalInfo extends Component {
   state = {
     values: [33, 33, 34],
     fats: 33,
     proteins: 33,
-    carbohydrates: 34
+    carbohydrates: 34,
+    isLoading: false
   }
 
   handleSubmit = e => {
@@ -109,6 +111,7 @@ class NutritionalInfo extends Component {
       activity: this.props.activity
     })
 
+    this.setState({ isLoading: true })
     axios.post("http://localhost:8000/api/userinfo", {
       weight: this.props.weight,
       gender: this.props.gender,
@@ -136,6 +139,8 @@ class NutritionalInfo extends Component {
       this.props.setLothianBreakfast(lothian.breakfast)
       this.props.setLothianLunch(lothian.lunch)
       this.props.setLothianDinner(lothian.dinner)
+
+      this.setState({ isLoading: false })
 
       this.props.history.push("/results")
     })
@@ -211,7 +216,14 @@ class NutritionalInfo extends Component {
                     </div>
                   </div>
                   <div className="row justify-content-center">
-                    <button id="submit-button" type="submit" className="btn btn-danger">Submit</button>
+                    <div class="col-md-5">
+                      <button id="submit-button" type="submit" className="btn btn-danger">Submit</button>
+                    </div>
+                    <div className="col-md-4">
+                      <div className="loading-container">
+                      { this.state.isLoading && <div className="loading"><img id="spinner" src={ spinner } alt=""/></div> }
+                      </div>
+                    </div>
                   </div>
                 </form>
               </div>
