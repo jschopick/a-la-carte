@@ -18,6 +18,26 @@ import { setCarbohydrates } from '../actions/setCarbohydrates'
 
 const validator = require("email-validator")
 
+// { 
+//    breakfast:
+//    [ 
+//      { foodName: 'Assorted Bagels (Plain, Onion, Blueberry, Cinn raisin)', numGrams: 57 },
+//      { foodName: 'Bacon', numGrams: 15 } 
+//    ],
+//    lunch:
+//    [ 
+//      { foodName: 'All-American Blended Burger', numGrams: 113 },
+//      { foodName: 'Black Bean Burger', numGrams: 120 },
+//      { foodName: 'Grilled Chicken Breast', numGrams: 112 },
+//      { foodName: 'Minestrone', numGrams: 227 } ],
+//    dinner:
+//    [
+//      { foodName: 'Topping', numGrams: 16 },
+//      { foodName: 'Grilled Chicken Breast', numGrams: 112 },
+//      { foodName: 'Grilled Chicken Breast', numGrams: 112 },
+//      { foodName: 'Grilled Chicken Breast', numGrams: 112 } ] 
+// }
+
 class Results extends Component {
   state = {
     modal: false
@@ -85,17 +105,27 @@ class Results extends Component {
               <div className="col-md-5">
                 <Card
                   name="Aberdeen & Inverness"
-                  breakfast={[["eggs", "10"], ["sausage", "10"], ["eggs", "10"], ["sausage", "10"], ["eggs", "10"], ["sausage", "10"], ["eggs", "10"], ["sausage", "10"], ["eggs", "10"], ["sausage", "10"], ["eggs", "10"], ["sausage", "10"], ["eggs", "10"], ["sausage", "10"], ["eggs", "10"], ["sausage", "10"]]}
-                  // lunch={}
-                  // dinner={}
+                  breakfast={ [ { foodName: 'Assorted Bagels (Plain, Onion, Blueberry, Cinn raisin)',
+                        numGrams: 57 },
+                      { foodName: 'Bacon', numGrams: 15 } ] }
+                  lunch={ [ 
+                          { foodName: 'All-American Blended Burger', numGrams: 113 },
+                          { foodName: 'Black Bean Burger', numGrams: 120 },
+                          { foodName: 'Grilled Chicken Breast', numGrams: 112 },
+                          { foodName: 'Minestrone', numGrams: 227 } ] }
+                  dinner={ [
+                          { foodName: 'Topping', numGrams: 16 },
+                          { foodName: 'Grilled Chicken Breast', numGrams: 112 },
+                          { foodName: 'Grilled Chicken Breast', numGrams: 112 },
+                          { foodName: 'Grilled Chicken Breast', numGrams: 112 } ] }
                 />
               </div>
               <div className="col-md-5">
                 <Card
                   name="Lothian"
-                  breakfast={[["eggs", "10"], ["sausage", "10"], ["eggs", "10"], ["sausage", "10"], ["eggs", "10"], ["sausage", "10"], ["eggs", "10"], ["sausage", "10"]]}
-                  // lunch={}
-                  // dinner={}
+                  breakfast={ this.props.lothianBreakfast }
+                  lunch={ this.props.lothianLunch }
+                  dinner={ this.props.lothianDinner }
                 />
               </div>
             </div>
@@ -132,6 +162,17 @@ class Results extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    lothianBreakfast: state.lothianBreakfast,
+    lothianLunch: state.lothianLunch,
+    lothianDinner: state.lothianDinner,
+    aiBreakfast: state.aiBreakfast,
+    aiLunch: state.aiLunch,
+    aiDinner: state.aiDinner
+  }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
     setAllergies: allergies => { dispatch(setAllergies(allergies)) },
@@ -143,4 +184,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Results)
+export default connect(mapStateToProps, mapDispatchToProps)(Results)

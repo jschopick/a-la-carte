@@ -12,7 +12,13 @@ const initState = {
   fats: undefined,
   proteins: undefined,
   carbohydrates: undefined,
-  activity: undefined
+  activity: undefined,
+  aiBreakfast: undefined,
+  aiLunch: undefined,
+  aiDinner: undefined,
+  lothianBreakfast: undefined,
+  lothianLunch: undefined,
+  lothianDinner: undefined
 }
 
 const rootReducer = (state = initState, action) => {
@@ -98,6 +104,42 @@ const rootReducer = (state = initState, action) => {
     return {
       ...state,
       carbohydrates: action.carbohydrates
+    }
+  }
+  else if (action.type === "SET_AI_BREAKFAST") {
+    return {
+      ...state,
+      aiBreakfast: action.breakfast
+    }
+  }
+  else if (action.type === "SET_LOTHIAN_BREAKFAST") {
+    return {
+      ...state,
+      lothianBreakfast: action.breakfast
+    }
+  }
+  else if (action.type === "SET_AI_LUNCH") {
+    return {
+      ...state,
+      aiLunch: action.lunch
+    }
+  }
+  else if (action.type === "SET_LOTHIAN_LUNCH") {
+    return {
+      ...state,
+      lothianLunch: action.lunch
+    }
+  }
+  else if (action.type === "SET_AI_DINNER") {
+    return {
+      ...state,
+      aiDinner: action.dinner
+    }
+  }
+  else if (action.type === "SET_LOTHIAN_DINNER") {
+    return {
+      ...state,
+      lothianDinner: action.dinner
     }
   }
 
