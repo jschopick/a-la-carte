@@ -15,6 +15,8 @@ const aiURL = 'http://138.23.12.141/foodpro/shortmenu.asp?sName=University+of+Ca
 let LothianMenu = JSON.parse('{"breakfast":[], "lunch": [], "dinner" : []}')
 let AIMenu = JSON.parse('{"breakfast":[], "lunch": [], "dinner" : []}')
 
+let Database = null;
+
 getMenu();
 //USER INFO
 let usr = JSON.parse('{' +
@@ -34,7 +36,7 @@ let usr = JSON.parse('{' +
     '"weight": "130"' +
     '}')
 
-console.log(usr)
+//console.log(usr)
 
 
 
@@ -55,14 +57,18 @@ function getMenu() {
 
 function retrieveDatabase(callback){
     let sql = "SELECT * FROM UCRDining";
-    connection.connect(function(err) {
-        if (err) throw err;
-        connection.query(sql, function (err, result, fields) {
+    if(AIMenu.breakfast !== null) {
+        connection.connect(function (err) {
             if (err) throw err;
-            console.log(result);
-            callback();
+            connection.query(sql, function (err, result, fields) {
+                if (err) throw err;
+                //console.log(result);
+                Database = result;
+                //console.log(Database);
+                returnMealAI();
+            });
         });
-    });
+    }
 }
 
 function parse(url, location,callback) {
@@ -158,23 +164,61 @@ function parse(url, location,callback) {
 }
 
 function returnMealAI() {
-    let numCalories = 500;
-    let carbRatio = .33;
-    let fatRatio = .33;
-    let proteinRatio = .34;
-    
+    console.log("REACH return Meal AI")
+    let numCaloriesBreakfast = 0;
+    let numCaloriesLunch = 0;
+    let numCaloriesDinner = 0;
+    let carbRatio = 0;
+    let fatRatio = 0;
+    let proteinRatio = 0;
 
-    let mealsArray = JSON.parse(text);
-    let idealCarb = (numCalories * carbRatio) / 4;
-    let idealFat = (numCalories * fatRatio) / 9;
-    let idealProtein = (numCalories * proteinRatio) / 4;
+    if(usr.experience === "expert"){
+        numCaloriesBreakfast = usr.calories * 0.3;
+        numCaloriesLunch = usr.calories * 0.3;
+        numCaloriesDinner = usr.calories * 0.4;
+        carbRatio = usr.carbohydrates/100;
+        fatRatio = usr.fats/100;
+        proteinRatio = usr.proteins/100;
+    }
 
-    console.log(idealCarb);
-    console.log(idealFat);
-    console.log(idealProtein);
+    let breakfastOptions = JSON.stringify(AIMenu.breakfast);
+    let breakFastArray = JSON.parse('[]');
+    if(AIMenu.breakfast !== null){
+        for(let i = 0; i < Database.length; i++){
+            if((breakfastOptions.includes(Database[i].foodName))){
+                let temp = Database[i]
+                let include = true
+                for(let j=0; j < usr.allergies.length; j++){
+                    if((temp.ingredients.toLowerCase()).includes(usr.allergies[j])){
+                        if(include === true){
+                            include = false
+                        }
+                    }
+                }
+                if(include === true){
+                    breakFastArray.push(temp)
+                }
+            }
+        }
+        let idealCarb = (numCaloriesBreakfast * carbRatio) / 4;
+        let idealFat = (numCaloriesBreakfast * fatRatio) / 9;
+        let idealProtein = (numCaloriesBreakfast * proteinRatio) / 4;
 
-    let meal = mealForwardSelection(mealsArray, idealCarb, idealFat, idealProtein);
-    console.log(meal);
+        console.log(idealCarb);
+        console.log(idealFat);
+        console.log(idealProtein);
+
+        let meal = mealForwardSelection(breakFastArray, idealCarb, idealFat, idealProtein);
+        console.log(meal);
+
+    }
+    //console.log('AI BF Menu: ')
+    //console.log(AIMenu);
+
+    //console.log('AI Array')
+    //console.log(breakFastArray);
+
+
 
 //let test = mealsArray[0];
 //console.log(test)
@@ -209,7 +253,10 @@ function mealForwardSelection(mealsArray,idealCarb,idealFat,idealProtein){
             totalCarb = currentCarb;
             totalFat = currentFat;
             totalProtein = currentProtein;
-            meal.push(mealsArray[location])
+            let temp = JSON.parse('{"foodName": "", "numGrams": 0}');
+            temp.foodName = mealsArray[location].foodName;
+            temp.numGrams = mealsArray[location].serving_size;
+            meal.push(temp);
         }
     }while(bestCurrentError <= bestTotalError);
     console.log(totalCarb);
@@ -222,6 +269,6 @@ function mealForwardSelection(mealsArray,idealCarb,idealFat,idealProtein){
 
 
 function oneNN(idealCarb,idealFat,idealProtein,checkCarb,checkFat,checkProtein){
-    return Math.abs(idealCarb - checkCarb) + Math.abs(idealFat - checkFat) + Math.abs(idealProtein - checkProtein);
-    //return Math.sqrt(Math.pow((idealCarb-checkCarb),2) + Math.pow((idealFat-checkFat),2) + Math.pow((idealProtein-checkProtein),2));
+    //return Math.abs(idealCarb - checkCarb) + Math.abs(idealFat - checkFat) + Math.abs(idealProtein - checkProtein);
+    return Math.sqrt(Math.pow((idealCarb-checkCarb),2) + Math.pow((idealFat-checkFat),2) + Math.pow((idealProtein-checkProtein),2));
 }
