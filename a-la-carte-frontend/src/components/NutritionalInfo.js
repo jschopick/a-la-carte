@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import MultiSlider from "multi-slider";
 import axios from 'axios'
 import './NutritionalInfo.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Dispatches
 import { setAllergies } from '../actions/setAllergies'
@@ -24,11 +26,6 @@ class NutritionalInfo extends Component {
     carbohydrates: 34
   }
 
-  submitFix = e => {
-    this.handleSubmit(e)
-    setTimeout(this.handleSubmit(e), 3000)
-  }
-
   handleSubmit = e => {
     e.preventDefault()
 
@@ -40,15 +37,41 @@ class NutritionalInfo extends Component {
 
     if (this.props.experience == "beginner") {
       goalWeight = e.target.goalWeight.value
+      if (!goalWeight) {
+        toast.error("Enter a target weight!")
+        return
+      }
+      if (Math.abs(this.props.weight - goalWeight) > 20) {
+        toast.warn("You might be trying to either gain or lose too much!")
+        return
+      }
     }
     else if (this.props.experience == "expert") {
       calories = e.target.totalCalories.value
       fats = this.state.fats
       proteins = this.state.proteins
       carbohydrates = this.state.carbohydrates
+
+      if (!calories) {
+        toast.error("You forgot to enter your total calories for the day :(")
+        return
+      }
+      if (calories < 1000 || calories > 4000) {
+        toast.warn("Try entering a value between 1000 and 4000, inclusive.")
+        return
+      }
     }
 
     let meals = e.target.meals.value
+    if (!meals) {
+      toast.error("Don't forget to input your meals")
+      return
+    }
+    if (meals < 1 || meals > 3) {
+      toast.error("The number of meals should be between 1 and 3, inclusive")
+      return
+    }
+
     let allergies = e.target.allergies.value.split(", ") // ex. Nuts, peanuts, bananas
     
     for (let i = 0; i < allergies.length; ++i) {
@@ -62,15 +85,6 @@ class NutritionalInfo extends Component {
     this.props.setFats(fats)
     this.props.setProteins(proteins)
     this.props.setCarbohydrates(carbohydrates)
-
-    if (this.props.experience == "beginner") {
-      // Send a post request with:
-      //    gender, weight, feet, inches, age, activity level, goal weight, meals, allergies
-    }
-    else {
-      // Send a post request with:
-      //    gender, weight, feet, inches, age, activity level, calories, fats, proteins, carbohydrates, allergies
-    }
 
     axios.post("http://localhost:8000/api/userinfo", {
       weight: this.props.weight,
@@ -115,7 +129,7 @@ class NutritionalInfo extends Component {
                 </div>
               </div>
               <div class="nutritional-info-form-container">
-                <form className="nutritional-info-form" onSubmit={ this.submitFix }>
+                <form className="nutritional-info-form" onSubmit={ this.handleSubmit }>
                   <div class="row">
                     { this.props.experience == "expert" && <div className="col-md-12">
                       <p className="info-caption">Enter your preferred total calories for the day.</p>
@@ -170,6 +184,10 @@ class NutritionalInfo extends Component {
             <div className="col-md-4 image-filler-nutritional"></div>
           </div>
         </div>
+        <ToastContainer
+          position="bottom-center"
+          hideProgressBar
+        />
       </div>
     )
   }
