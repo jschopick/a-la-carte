@@ -4,7 +4,7 @@ const connection = require('../connection');
 const rp = require('request-promise');
 const $ = require('cheerio');
 const today = new Date();
-const day = today.getDate() + 1; // Get tomorrow's date
+const day = today.getDate() + 3; // Get tomorrow's date
 const month = today.getMonth() + 1;
 const year = today.getFullYear();
 
@@ -43,13 +43,13 @@ let usr = JSON.parse('{' +
 function getMenu() {
     console.log("REACH LOTHIAN SEARCH")
     parse(lothianURL, "Lothian",function () {
-        console.log("Lothian Menu")
-        console.log(LothianMenu)
+        //console.log("Lothian Menu")
+        //console.log(LothianMenu)
 
         console.log("REACH AI SEARCH")
         parse(aiURL, "AI", function () {
-            console.log("AI Menu");
-            console.log(AIMenu);
+            //console.log("AI Menu");
+            //console.log(AIMenu);
             retrieveDatabase();
         });
     });
@@ -66,6 +66,7 @@ function retrieveDatabase(callback){
                 Database = result;
                 //console.log(Database);
                 returnMealAI();
+                returnMealLothian();
             });
         });
     }
@@ -171,6 +172,9 @@ function returnMealAI() {
     let carbRatio = 0;
     let fatRatio = 0;
     let proteinRatio = 0;
+    let breakfastMeal = null;
+    let lunchMeal = null;
+    let dinnerMeal = null;
 
     if(usr.experience === "expert"){
         numCaloriesBreakfast = usr.calories * 0.3;
@@ -204,26 +208,212 @@ function returnMealAI() {
         let idealFat = (numCaloriesBreakfast * fatRatio) / 9;
         let idealProtein = (numCaloriesBreakfast * proteinRatio) / 4;
 
-        console.log(idealCarb);
-        console.log(idealFat);
-        console.log(idealProtein);
+        //console.log(idealCarb);
+        //console.log(idealFat);
+        //console.log(idealProtein);
 
-        let meal = mealForwardSelection(breakFastArray, idealCarb, idealFat, idealProtein);
-        console.log(meal);
+        breakfastMeal = mealForwardSelection(breakFastArray, idealCarb, idealFat, idealProtein);
+
+        //console.log(breakfastMeal);
 
     }
-    //console.log('AI BF Menu: ')
-    //console.log(AIMenu);
 
-    //console.log('AI Array')
-    //console.log(breakFastArray);
+    let lunchOptions = JSON.stringify(AIMenu.lunch);
+    let lunchArray = JSON.parse('[]');
+    if(AIMenu.lunch !== null){
+        for(let i = 0; i < Database.length; i++){
+            if((lunchOptions.includes(Database[i].foodName))){
+                let temp = Database[i]
+                let include = true
+                for(let j=0; j < usr.allergies.length; j++){
+                    if((temp.ingredients.toLowerCase()).includes(usr.allergies[j])){
+                        if(include === true){
+                            include = false
+                        }
+                    }
+                }
+                if(include === true){
+                    lunchArray.push(temp)
+                }
+            }
+        }
+        let idealCarb = (numCaloriesLunch * carbRatio) / 4;
+        let idealFat = (numCaloriesLunch * fatRatio) / 9;
+        let idealProtein = (numCaloriesLunch * proteinRatio) / 4;
 
+        //console.log(idealCarb);
+        //console.log(idealFat);
+        //console.log(idealProtein);
 
+        lunchMeal = mealForwardSelection(lunchArray, idealCarb, idealFat, idealProtein);
 
-//let test = mealsArray[0];
-//console.log(test)
-//console.log(oneNN(idealCarb,idealFat,idealProtein,test));
+        //console.log(lunchMeal);
+
+    }
+
+    let dinnerOptions = JSON.stringify(AIMenu.dinner);
+    let dinnerArray = JSON.parse('[]');
+    if(AIMenu.dinner !== null){
+        for(let i = 0; i < Database.length; i++){
+            if((dinnerOptions.includes(Database[i].foodName))){
+                let temp = Database[i]
+                let include = true
+                for(let j=0; j < usr.allergies.length; j++){
+                    if((temp.ingredients.toLowerCase()).includes(usr.allergies[j])){
+                        if(include === true){
+                            include = false
+                        }
+                    }
+                }
+                if(include === true){
+                    dinnerArray.push(temp)
+                }
+            }
+        }
+        let idealCarb = (numCaloriesDinner * carbRatio) / 4;
+        let idealFat = (numCaloriesDinner * fatRatio) / 9;
+        let idealProtein = (numCaloriesDinner * proteinRatio) / 4;
+
+        //console.log(idealCarb);
+        //console.log(idealFat);
+        //console.log(idealProtein);
+
+        dinnerMeal = mealForwardSelection(dinnerArray, idealCarb, idealFat, idealProtein);
+
+        //console.log(dinnerMeal);
+    }
+    let ret = JSON.parse('{"breakfast" : [], "lunch": [], "dinner" : []}')
+    ret.breakfast = breakfastMeal;
+    ret.lunch = lunchMeal;
+    ret.dinner = dinnerMeal;
+    console.log(ret);
 }
+
+function returnMealLothian() {
+    console.log("REACH return Meal Lothian")
+    let numCaloriesBreakfast = 0;
+    let numCaloriesLunch = 0;
+    let numCaloriesDinner = 0;
+    let carbRatio = 0;
+    let fatRatio = 0;
+    let proteinRatio = 0;
+    let breakfastMeal = null;
+    let lunchMeal = null;
+    let dinnerMeal = null;
+
+    if(usr.experience === "expert"){
+        numCaloriesBreakfast = usr.calories * 0.3;
+        numCaloriesLunch = usr.calories * 0.3;
+        numCaloriesDinner = usr.calories * 0.4;
+        carbRatio = usr.carbohydrates/100;
+        fatRatio = usr.fats/100;
+        proteinRatio = usr.proteins/100;
+    }
+
+    let breakfastOptions = JSON.stringify(LothianMenu.breakfast);
+    let breakFastArray = JSON.parse('[]');
+    if(AIMenu.breakfast !== null){
+        for(let i = 0; i < Database.length; i++){
+            if((breakfastOptions.includes(Database[i].foodName))){
+                let temp = Database[i]
+                let include = true
+                for(let j=0; j < usr.allergies.length; j++){
+                    if((temp.ingredients.toLowerCase()).includes(usr.allergies[j])){
+                        if(include === true){
+                            include = false
+                        }
+                    }
+                }
+                if(include === true){
+                    breakFastArray.push(temp)
+                }
+            }
+        }
+        let idealCarb = (numCaloriesBreakfast * carbRatio) / 4;
+        let idealFat = (numCaloriesBreakfast * fatRatio) / 9;
+        let idealProtein = (numCaloriesBreakfast * proteinRatio) / 4;
+
+        //console.log(idealCarb);
+        //console.log(idealFat);
+        //console.log(idealProtein);
+
+        breakfastMeal = mealForwardSelection(breakFastArray, idealCarb, idealFat, idealProtein);
+
+        //console.log(breakfastMeal);
+
+    }
+
+    let lunchOptions = JSON.stringify(LothianMenu.lunch);
+    let lunchArray = JSON.parse('[]');
+    if(AIMenu.lunch !== null){
+        for(let i = 0; i < Database.length; i++){
+            if((lunchOptions.includes(Database[i].foodName))){
+                let temp = Database[i]
+                let include = true
+                for(let j=0; j < usr.allergies.length; j++){
+                    if((temp.ingredients.toLowerCase()).includes(usr.allergies[j])){
+                        if(include === true){
+                            include = false
+                        }
+                    }
+                }
+                if(include === true){
+                    lunchArray.push(temp)
+                }
+            }
+        }
+        let idealCarb = (numCaloriesLunch * carbRatio) / 4;
+        let idealFat = (numCaloriesLunch * fatRatio) / 9;
+        let idealProtein = (numCaloriesLunch * proteinRatio) / 4;
+
+        //console.log(idealCarb);
+        //console.log(idealFat);
+        //console.log(idealProtein);
+
+        lunchMeal = mealForwardSelection(lunchArray, idealCarb, idealFat, idealProtein);
+
+        //console.log(lunchMeal);
+
+    }
+
+    let dinnerOptions = JSON.stringify(LothianMenu.dinner);
+    let dinnerArray = JSON.parse('[]');
+    if(AIMenu.dinner !== null){
+        for(let i = 0; i < Database.length; i++){
+            if((dinnerOptions.includes(Database[i].foodName))){
+                let temp = Database[i]
+                let include = true
+                for(let j=0; j < usr.allergies.length; j++){
+                    if((temp.ingredients.toLowerCase()).includes(usr.allergies[j])){
+                        if(include === true){
+                            include = false
+                        }
+                    }
+                }
+                if(include === true){
+                    dinnerArray.push(temp)
+                }
+            }
+        }
+        let idealCarb = (numCaloriesDinner * carbRatio) / 4;
+        let idealFat = (numCaloriesDinner * fatRatio) / 9;
+        let idealProtein = (numCaloriesDinner * proteinRatio) / 4;
+
+        //console.log(idealCarb);
+        //console.log(idealFat);
+        //console.log(idealProtein);
+
+        dinnerMeal = mealForwardSelection(dinnerArray, idealCarb, idealFat, idealProtein);
+
+        //console.log(dinnerMeal);
+    }
+    let ret = JSON.parse('{"breakfast" : [], "lunch": [], "dinner" : []}')
+    ret.breakfast = breakfastMeal;
+    ret.lunch = lunchMeal;
+    ret.dinner = dinnerMeal;
+    console.log(ret);
+}
+
 
 function mealForwardSelection(mealsArray,idealCarb,idealFat,idealProtein){
     let bestTotalError = 999;
@@ -259,10 +449,10 @@ function mealForwardSelection(mealsArray,idealCarb,idealFat,idealProtein){
             meal.push(temp);
         }
     }while(bestCurrentError <= bestTotalError);
-    console.log(totalCarb);
-    console.log(totalFat);
-    console.log(totalProtein);
-    console.log(totalCarb*4 + totalFat*9 + totalProtein*4);
+    //console.log(totalCarb);
+    //console.log(totalFat);
+    //console.log(totalProtein);
+    //console.log(totalCarb*4 + totalFat*9 + totalProtein*4);
     return meal;
 }
 
