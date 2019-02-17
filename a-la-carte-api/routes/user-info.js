@@ -1,6 +1,6 @@
 const connection = require('../connection');
 
-// Get request for everything in Top Genres database
+// Post request to populate database with current user information.
 module.exports = function(router) {
   router.post('/userinfo', function(req, res) {
     let info = req.body;
@@ -12,9 +12,9 @@ module.exports = function(router) {
         return res.status(500).send(err);
       } else {
         console.log('\nSuccessful Post to DB');
-        console.log(rows);
-        return res.send(rows);
+        return res.send(rows); // TODO: Return JSON object for AI and Lothian Meal Plans
       }
     });
   });
 };
+

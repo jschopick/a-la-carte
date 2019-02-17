@@ -20,7 +20,7 @@ class Experience extends Component {
     e.preventDefault()
     let experience = ""
 
-    if (this.state.cSelected == 1) {
+    if (this.state.cSelected === 1) {
       console.log("expert")
       experience = "expert"
     }

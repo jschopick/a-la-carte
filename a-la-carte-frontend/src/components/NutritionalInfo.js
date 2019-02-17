@@ -35,7 +35,7 @@ class NutritionalInfo extends Component {
     let proteins;
     let carbohydrates;
 
-    if (this.props.experience == "beginner") {
+    if (this.props.experience === "beginner") {
       goalWeight = e.target.goalWeight.value
       if (!goalWeight) {
         toast.error("Enter a target weight!")
@@ -46,7 +46,7 @@ class NutritionalInfo extends Component {
         return
       }
     }
-    else if (this.props.experience == "expert") {
+    else if (this.props.experience === "expert") {
       calories = e.target.totalCalories.value
       fats = this.state.fats
       proteins = this.state.proteins
@@ -131,7 +131,7 @@ class NutritionalInfo extends Component {
               <div class="nutritional-info-form-container">
                 <form className="nutritional-info-form" onSubmit={ this.handleSubmit }>
                   <div class="row">
-                    { this.props.experience == "expert" && <div className="col-md-12">
+                    { this.props.experience === "expert" && <div className="col-md-12">
                       <p className="info-caption">Enter your preferred total calories for the day.</p>
                       <input className="form-control" id="total-calories" name="totalCalories" type="text" placeholder="Total calories..."/>
                     </div> }
@@ -142,13 +142,13 @@ class NutritionalInfo extends Component {
                       <input className="form-control" id="meals" name="meals" type="text" placeholder="Number of meals..."/>
                     </div>
                   </div>
-                  { this.props.experience == "beginner" && <div class="row">
+                  { this.props.experience === "beginner" && <div class="row">
                     <div className="col-md-12">
                       <p className="info-caption">Set your target weight (lbs).</p>
                       <input className="form-control" id="goal-weight" name="goalWeight" type="text" placeholder="Target weight..."/>
                     </div>
                   </div> }
-                  { this.props.experience == "expert" && <div class="macro-container">
+                  { this.props.experience === "expert" && <div class="macro-container">
                     <div className="row">
                       <div className="col-md-12">
                         <p className="info-caption" id="macro-distribution">Macro Distribution</p>
