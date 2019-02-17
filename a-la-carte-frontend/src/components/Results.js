@@ -12,7 +12,7 @@ class Results extends Component {
         to: 'justin@schopick.com',
         from: 'support@alacar.tech',
         subject: 'Your Custom Meal Plan',
-        html: '<body><p>You wanted it, you got it! We at A-la-carte hope that we can help you reach your nutrition goals! You will find your meal plan for tomorrow attached to this email. Please remember that even though we use high-tech algorithms to create your meal plan, we are not a substitute for professional medical advice.</p><img alt="Meal Plan" src="' + canvas.toDataURL() + '"/></body>'
+        html: '<body><p>You wanted it, you got it! We at A-la-carte hope that we can help you reach your nutrition goals! You will find your meal plan for tomorrow below. Please remember that even though we use high-tech algorithms to create your meal plan, we are not a substitute for professional medical advice.</p><img alt="Meal Plan" src="' + canvas.toDataURL() + '"/></body>'
       }).then(res => console.log(res))
       .catch(err => console.log(err))
     });
