@@ -105,19 +105,9 @@ class Results extends Component {
               <div className="col-md-5">
                 <Card
                   name="Aberdeen & Inverness"
-                  breakfast={ [ { foodName: 'Assorted Bagels (Plain, Onion, Blueberry, Cinn raisin)',
-                        numGrams: 57 },
-                      { foodName: 'Bacon', numGrams: 15 } ] }
-                  lunch={ [ 
-                          { foodName: 'All-American Blended Burger', numGrams: 113 },
-                          { foodName: 'Black Bean Burger', numGrams: 120 },
-                          { foodName: 'Grilled Chicken Breast', numGrams: 112 },
-                          { foodName: 'Minestrone', numGrams: 227 } ] }
-                  dinner={ [
-                          { foodName: 'Topping', numGrams: 16 },
-                          { foodName: 'Grilled Chicken Breast', numGrams: 112 },
-                          { foodName: 'Grilled Chicken Breast', numGrams: 112 },
-                          { foodName: 'Grilled Chicken Breast', numGrams: 112 } ] }
+                  breakfast={ this.props.aiBreakfast }
+                  lunch={ this.props.aiLunch }
+                  dinner={ this.props.aiDinner }
                 />
               </div>
               <div className="col-md-5">

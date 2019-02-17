@@ -3,7 +3,7 @@ import './Card.css'
 
 export default class Card extends Component {
   convertFoodString = foods => {
-    console.log(foods)
+    console.log("hi")
 
     let uniqueFoods = [foods[0]];
     for (let i = 1; i < foods.length; ++i) {
@@ -12,7 +12,7 @@ export default class Card extends Component {
 
       for (let j = 0; j < uniqueFoods.length; ++j) {
         if (food.foodName == uniqueFoods[j].foodName) {
-          exists = true;
+          exists = true
           break;
         }
       }

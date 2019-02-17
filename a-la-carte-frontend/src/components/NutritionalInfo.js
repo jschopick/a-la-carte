@@ -15,6 +15,12 @@ import { setGoalWeight } from '../actions/setGoalWeight'
 import { setFats } from '../actions/setFats'
 import { setProteins } from '../actions/setProteins'
 import { setCarbohydrates } from '../actions/setCarbohydrates'
+import { setAIBreakfast } from '../actions/setAIBreakfast'
+import { setAILunch } from '../actions/setAILunch'
+import { setAIDinner } from '../actions/setAIDinner'
+import { setLothianBreakfast } from '../actions/setLothianBreakfast'
+import { setLothianLunch } from '../actions/setLothianLunch'
+import { setLothianDinner } from '../actions/setLothianDinner'
 
 const colors = ["#FCBD7E", "#EB9F71", "#E6817C"]
 
@@ -118,7 +124,9 @@ class NutritionalInfo extends Component {
       proteins,
       carbohydrates,
       activity: this.props.activity
-    }).then(res => console.log(res))
+    }).then(res => {
+      this.props.history.push("/results")
+    })
     .catch(err => console.log(err))
   }
 
@@ -236,7 +244,13 @@ const mapDispatchToProps = dispatch => {
     setGoalWeight: goalWeight => { dispatch(setGoalWeight(goalWeight)) },
     setFats: fats => { dispatch(setFats(fats)) },
     setProteins: proteins => { dispatch(setProteins(proteins)) },
-    setCarbohydrates: carbohydrates => { dispatch(setCarbohydrates(carbohydrates)) }
+    setCarbohydrates: carbohydrates => { dispatch(setCarbohydrates(carbohydrates)) },
+    setAIBreakfast: breakfast => { dispatch(setAIBreakfast(breakfast)) },
+    setAILunch: lunch => { dispatch(setAILunch(lunch)) },
+    setAIDinner: dinner => { dispatch(setAIDinner(dinner)) },
+    setLothianBreakfast: breakfast => { dispatch(setLothianBreakfast(breakfast)) },
+    setLothianLunch: lunch => { dispatch(setLothianLunch(lunch)) },
+    setLothianDinner: dinner => { dispatch(setLothianDinner(dinner)) }
   }
 }
 
