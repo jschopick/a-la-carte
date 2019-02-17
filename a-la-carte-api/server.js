@@ -29,7 +29,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '100mb', extended: true}));
+app.use(bodyParser.urlencoded({limit: '100mb', extended: true}));
+// app.use(bodyParser.json());
 
 // Connect to MySQL Database
 connection.connect(function(err) {
