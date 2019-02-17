@@ -126,7 +126,6 @@ class PersonalInfo extends Component {
         <ToastContainer
           position="bottom-center"
           hideProgressBar
-          toastClassName={css({ fontFamily: "Varela Round, sans-serif" })}
         />
       </div>
     )
