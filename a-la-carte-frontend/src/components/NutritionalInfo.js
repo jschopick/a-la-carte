@@ -23,6 +23,11 @@ class NutritionalInfo extends Component {
     carbohydrates: 34
   }
 
+  submitFix = e => {
+    this.handleSubmit(e)
+    setTimeout(this.handleSubmit(e), 3000)
+  }
+
   handleSubmit = e => {
     e.preventDefault()
 
@@ -66,7 +71,7 @@ class NutritionalInfo extends Component {
       //    gender, weight, feet, inches, age, activity level, calories, fats, proteins, carbohydrates, allergies
     }
 
-    
+
 
     console.log(this.props.content)
   }
@@ -93,7 +98,7 @@ class NutritionalInfo extends Component {
                 </div>
               </div>
               <div class="nutritional-info-form-container">
-                <form className="nutritional-info-form" onSubmit={ this.handleSubmit }>
+                <form className="nutritional-info-form" onSubmit={ this.submitFix }>
                   <div class="row">
                     { this.props.experience == "expert" && <div className="col-md-12">
                       <p className="info-caption">Enter your preferred total calories for the day.</p>

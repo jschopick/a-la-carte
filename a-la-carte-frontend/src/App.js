@@ -4,6 +4,7 @@ import Home from './components/Home'
 import PersonalInfo from './components/PersonalInfo'
 import Experience from './components/Experience'
 import NutritionalInfo from './components/NutritionalInfo'
+import Results from './components/Results'
 import './App.css'
 
 class App extends Component {
@@ -16,6 +17,7 @@ class App extends Component {
             <Route path="/personal-info" component={ PersonalInfo }/>
             <Route path="/experience" component={ Experience }/>
             <Route path="/nutritional-info" component={ NutritionalInfo }/>
+            <Route path="/results" component={ Results }/>
           </Switch>
         </BrowserRouter>
       </div>
