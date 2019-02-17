@@ -5,6 +5,7 @@
   background-color: #FFFFFF;
   border-radius: 20px;
   box-shadow: 0 4px 8px 0 rgba(32, 32, 32, 0.548), 0 20px 40px 0 rgba(61, 61, 61, 0.19);
+  width: 80%
 }
 
 .restaurant-name {
@@ -18,9 +19,13 @@
   font-family: "Varela Round", sans-serif;
   color: #505050;
   letter-spacing: 10px;
-  font-weight: bold
+  font-weight: bold;
+  text-align: center
 }
 
-.meal-container {
-  height: 158px
+.food-items {
+  font-family: "Valera Round", sans-serif;
+  text-align: center;
+  white-space: pre-wrap;
+  color: #505050
 }
