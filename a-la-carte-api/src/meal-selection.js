@@ -1,25 +1,3 @@
-//given the following items for lunch:
-
-/*
-    {Name,Fat,Carb,Protein}
-    {Assorted Bagels, 0.3, 9.6, 1.8}
-    {Assorted Donuts, 8, 23, 1.8}
-    {Cereal Toppings, 4.4, 10.2, 0.4}
-    {Oatmeal, 1.5, 13.4, 2.5}
-    {Breakfast Omelet Toppings, 8, 1.8, 9}
-    {Egg Omelets, 11.4, 0.9, 11.1}
-    {Egg White Omelets, 2.9, 1.8, 9.2}
-    {Honey and Brown Sugar Baked Ham, 4.9, 7.1,19.7}
-    {Oven Roasted Jersey Sweet Yams, 0.1, 22.8, 1.8}
-    {Fresh Blended Mushroom Burger, 20.5, 21.4, 16.9}
-    {Natural Cut Fries, 6.4, 28, 2.7}
-
-    //IDEAL = {30%,30%,40%}
-    //Calories = 500 Calories
-    //1g protein = 4 cal
-    //1g carb  = 4 cal
-    //1g fat = 9cal
- */
 
 let numCalories = 500;
 let carbRatio = .33;
@@ -49,11 +27,6 @@ console.log(idealProtein);
 
 let meal = mealForwardSelection(mealsArray,idealCarb,idealFat,idealProtein);
 console.log(meal);
-
-//let test = mealsArray[0];
-//console.log(test)
-//console.log(oneNN(idealCarb,idealFat,idealProtein,test));
-
 
 function mealForwardSelection(mealsArray,idealCarb,idealFat,idealProtein){
     let bestTotalError = 999;
@@ -93,9 +66,6 @@ function mealForwardSelection(mealsArray,idealCarb,idealFat,idealProtein){
     return meal;
 }
 
-
-
 function oneNN(idealCarb,idealFat,idealProtein,checkCarb,checkFat,checkProtein){
     return Math.abs(idealCarb - checkCarb) + Math.abs(idealFat - checkFat) + Math.abs(idealProtein - checkProtein);
-    //return Math.sqrt(Math.pow((idealCarb-checkCarb),2) + Math.pow((idealFat-checkFat),2) + Math.pow((idealProtein-checkProtein),2));
 }
