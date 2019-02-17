@@ -1,0 +1,35 @@
+.nutritional-info-form-container {
+  width: 70%;
+  margin: 0 auto
+}
+
+#total-calories {
+  width: 40%
+}
+
+#meals {
+  width: 50%
+}
+
+.image-filler {
+  background-image: url('../assets/images/nutrition-1.jpg');
+  background-size: 100vh;
+  background-attachment: fixed
+}
+
+textarea {
+  height: auto
+}
+
+#macro-distribution {
+  margin-bottom: -2%
+}
+
+.percentage-container {
+  margin-bottom: 10%
+}
+
+.percentage {
+  font-family: 'Varela Round', sans-serif;
+  color: #505050
+}

@@ -3,21 +3,30 @@
 }
 
 #logo {
-  width: 40%;
+  width: 50%;
   margin-top: 10%
 }
 
 .begin-container {
   text-align: center;
-  margin-top: 10%
+  margin-top: 5%
 }
 
 .btn-primary {
   background-color: #D9393E;
   border: none;
   font-family: 'Varela Round', sans-serif;
+  border-radius: 15px
 }
 
 .btn:hover {
   background-color: rgb(161, 45, 49);
+}
+
+.home-container {
+  background-image: url('../assets/images/background.png');
+  background-size: cover;
+  height: 100vh;
+  background-repeat: no-repeat;
+  overflow: auto
 }

@@ -11,7 +11,7 @@
 }
 
 .personal-info-form-container {
-  width: 30%;
+  width: 70%;
   margin: 0 auto
 }
 
@@ -20,13 +20,22 @@
   margin-bottom: 10%;
   border: none;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.158), 0 4px 10px 0 rgba(145, 145, 145, 0.19);
+  color: #505050;
 }
 
 #years, #weight {
-  width: 70%
+  width: 50%
 }
 
 #submit-button {
-  margin-top: 5%;
-  border-radius: 10px
+  border-radius: 10px;
+  margin-bottom: 10%;
+}
+
+.image-filler {
+  background-image: url('../assets/images/nutrition-1.jpg');
+}
+
+.personal-info-container {
+  height: 110vh
 }

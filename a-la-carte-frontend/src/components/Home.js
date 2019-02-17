@@ -13,7 +13,7 @@ export default class Home extends Component {
             <img id="logo" src={ logo } alt="a-la-carte logo"/>
           </div>
           <div className="begin-container">
-            <NavLink to="/personal-info"><button id="begin-button" type="button" className="btn btn-primary">Begin</button></NavLink>
+            <NavLink to="/personal-info"><button id="begin-button" type="button" className="btn btn-primary">Get Started</button></NavLink>
           </div>
         </div>
       </div>
