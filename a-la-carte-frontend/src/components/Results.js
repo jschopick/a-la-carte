@@ -13,7 +13,7 @@ class Results extends Component {
               <div className="col-md-5">
                 <Card
                   name="Aberdeen & Inverness"
-                  // breakfast={}
+                  breakfast={[["eggs", "10"], ["sausage", "10"], ["eggs", "10"], ["sausage", "10"], ["eggs", "10"], ["sausage", "10"], ["eggs", "10"], ["sausage", "10"], ["eggs", "10"], ["sausage", "10"], ["eggs", "10"], ["sausage", "10"], ["eggs", "10"], ["sausage", "10"], ["eggs", "10"], ["sausage", "10"]]}
                   // lunch={}
                   // dinner={}
                 />
@@ -21,7 +21,7 @@ class Results extends Component {
               <div className="col-md-5">
                 <Card
                   name="Lothian"
-                  // breakfast={}
+                  breakfast={[["eggs", "10"], ["sausage", "10"], ["eggs", "10"], ["sausage", "10"], ["eggs", "10"], ["sausage", "10"], ["eggs", "10"], ["sausage", "10"]]}
                   // lunch={}
                   // dinner={}
                 />
