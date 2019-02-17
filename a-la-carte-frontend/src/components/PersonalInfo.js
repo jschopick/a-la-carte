@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import './PersonalInfo.css'
 import Header from './Header'
 import { connect } from 'react-redux'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Dispatches
 import { setGender } from '../actions/setGender'
@@ -21,6 +23,25 @@ class PersonalInfo extends Component {
     let feet = e.target.feet.value
     let inches = e.target.inches.value
     let activity = e.target.activity.value
+
+    if (!years) {
+      toast.error("Whoops! You forgot to input your age!")
+      return
+    }
+
+    if (!feet && !inches) {
+      toast.error("Don't forget to input your height!")
+      return
+    }
+
+    if (!weight) {
+      toast.error("Provide a value for your weight.")
+      return
+    }
+    if (parseInt(weight) < 1) {
+      toast.error("Your weight should be greater than 1 lbs.")
+      return
+    }
 
     this.props.setGender(gender)
     this.props.setAge(years)
@@ -102,6 +123,11 @@ class PersonalInfo extends Component {
               </div>
           </div>
         </div>
+        <ToastContainer
+          position="bottom-center"
+          hideProgressBar
+          toastClassName={css({ fontFamily: "Varela Round, sans-serif" })}
+        />
       </div>
     )
   }
