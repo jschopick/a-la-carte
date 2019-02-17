@@ -3,10 +3,11 @@ const connection = require('../connection');
 const rp = require('request-promise');
 const $ = require('cheerio');
 const today = new Date();
-const day = today.getDate() + 3; // Get tomorrow's date
+const day = today.getDate() + 3; // Get wednesdays's date
 const month = today.getMonth() + 1;
 const year = today.getFullYear();
 let returnValue = JSON.parse('[]');
+let returnArray = returnValue;
 let info;
 
 // Post request to populate database with current user information.
@@ -23,7 +24,9 @@ module.exports = function(router) {
         console.log('\nSuccessful Post to DB');
         getMenu(); // Call backend calculation
         console.log(JSON.stringify(returnValue));
-        return res.send(returnValue); // TODO: Return JSON object for AI and Lothian Meal Plans
+        returnArray = returnValue;
+        returnValue = JSON.parse('[]');
+        return res.send(returnArray);
       }
     });
   });
