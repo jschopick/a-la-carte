@@ -25,11 +25,11 @@ let usr = JSON.parse('{' +
     '"allergies": ["peanuts"],' +
     '"calories": "2000",' +
     '"carbohydrates": 34,' +
-    '"experience": "expert",' +
+    '"experience": "beginner",' +
     '"fats": 33,' +
     '"feet": "5",' +
     '"gender": "Male",' +
-    '"goalWeight": "undefined",' +
+    '"goalWeight": "100",' +
     '"inches": "7",' +
     '"meals": "3",' +
     '"proteins": 33,' +
@@ -175,6 +175,7 @@ function returnMealAI() {
     let breakfastMeal = null;
     let lunchMeal = null;
     let dinnerMeal = null;
+    let totalCalories = null;
 
     if(usr.experience === "expert"){
         numCaloriesBreakfast = usr.calories * 0.3;
@@ -183,7 +184,52 @@ function returnMealAI() {
         carbRatio = usr.carbohydrates/100;
         fatRatio = usr.fats/100;
         proteinRatio = usr.proteins/100;
+    }else{
+        if(usr.gender === 'Male'){
+            let BMR = (((parseInt(usr.feet)*12 + parseInt(usr.inches))*2.54*6.25) + (parseInt(usr.weight)*0.454*9.99) - (parseInt(usr.age) *4.92) + 5);
+            console.log('BMR');
+            console.log(BMR)
+            if(usr.activity.toLowerCase().includes("little")){
+                totalCalories = BMR * 1.2;
+            } else if (usr.activity.toLowerCase().includes("lightly")){
+                totalCalories = BMR * 1.375;
+            } else if (usr.activity.toLowerCase().includes("moderately")){
+                totalCalories = BMR * 1.55;
+            } else if (usr.activity.toLowerCase().includes("very")){
+                totalCalories = BMR * 1.725;
+            }
+        }else{
+            let BMR = ((parseInt(usr.feet)*12 + parseInt(usr.inches))*2.54*6.25) + (parseInt(usr.weight)*0.454*9.99) - (parseInt(usr.age) *4.92) - 161;
+            if(usr.activity.toLowerCase().includes("little")){
+                totalCalories = BMR * 1.1;
+            } else if (usr.activity.toLowerCase().includes("lightly")){
+                totalCalories = BMR * 1.275;
+            } else if (usr.activity.toLowerCase().includes("moderately")){
+                totalCalories = BMR * 1.35;
+            } else if (usr.activity.toLowerCase().includes("very")){
+                totalCalories = BMR * 1.525;
+            }
+        }
+        if(parseInt(usr.goalWeight) < parseInt(usr.weight)){
+            usr.calories = totalCalories - 500
+        }else if (parseInt(usr.goalWeight) === parseInt(usr.weight)){
+            usr.calories = totalCalories
+        }else{
+            usr.calories = totalCalories+500
+        }
+
+        //console.log('User Calories')
+        //console.log(totalCalories);
+
+        numCaloriesBreakfast = usr.calories * 0.3;
+        numCaloriesLunch = usr.calories * 0.3;
+        numCaloriesDinner = usr.calories * 0.4;
+        carbRatio = usr.carbohydrates/100;
+        fatRatio = usr.fats/100;
+        proteinRatio = usr.proteins/100;
     }
+
+
 
     let breakfastOptions = JSON.stringify(AIMenu.breakfast);
     let breakFastArray = JSON.parse('[]');
@@ -302,6 +348,49 @@ function returnMealLothian() {
     let dinnerMeal = null;
 
     if(usr.experience === "expert"){
+        numCaloriesBreakfast = usr.calories * 0.3;
+        numCaloriesLunch = usr.calories * 0.3;
+        numCaloriesDinner = usr.calories * 0.4;
+        carbRatio = usr.carbohydrates/100;
+        fatRatio = usr.fats/100;
+        proteinRatio = usr.proteins/100;
+    }else{
+        if(usr.gender === 'Male'){
+            let BMR = (((parseInt(usr.feet)*12 + parseInt(usr.inches))*2.54*6.25) + (parseInt(usr.weight)*0.454*9.99) - (parseInt(usr.age) *4.92) + 5);
+            console.log('BMR');
+            console.log(BMR)
+            if(usr.activity.toLowerCase().includes("little")){
+                totalCalories = BMR * 1.2;
+            } else if (usr.activity.toLowerCase().includes("lightly")){
+                totalCalories = BMR * 1.375;
+            } else if (usr.activity.toLowerCase().includes("moderately")){
+                totalCalories = BMR * 1.55;
+            } else if (usr.activity.toLowerCase().includes("very")){
+                totalCalories = BMR * 1.725;
+            }
+        }else{
+            let BMR = ((parseInt(usr.feet)*12 + parseInt(usr.inches))*2.54*6.25) + (parseInt(usr.weight)*0.454*9.99) - (parseInt(usr.age) *4.92) - 161;
+            if(usr.activity.toLowerCase().includes("little")){
+                totalCalories = BMR * 1.1;
+            } else if (usr.activity.toLowerCase().includes("lightly")){
+                totalCalories = BMR * 1.275;
+            } else if (usr.activity.toLowerCase().includes("moderately")){
+                totalCalories = BMR * 1.35;
+            } else if (usr.activity.toLowerCase().includes("very")){
+                totalCalories = BMR * 1.525;
+            }
+        }
+        if(parseInt(usr.goalWeight) < parseInt(usr.weight)){
+            usr.calories = totalCalories - 500
+        }else if (parseInt(usr.goalWeight) === parseInt(usr.weight)){
+            usr.calories = totalCalories
+        }else{
+            usr.calories = totalCalories+500
+        }
+
+        //console.log('User Calories')
+        //console.log(totalCalories);
+
         numCaloriesBreakfast = usr.calories * 0.3;
         numCaloriesLunch = usr.calories * 0.3;
         numCaloriesDinner = usr.calories * 0.4;
