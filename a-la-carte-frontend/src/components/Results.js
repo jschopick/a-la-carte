@@ -75,6 +75,7 @@ class Results extends Component {
 
     html2canvas(document.body).then(canvas => {
       axios.post("http://localhost:8000/api/sendemail", {
+      // axios.post("https://www.alacar.tech:2053/api/sendemail", {
         to: email,
         from: 'support@alacar.tech',
         subject: 'Your Custom Meal Plan',

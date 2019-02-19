@@ -113,6 +113,7 @@ class NutritionalInfo extends Component {
 
     this.setState({ isLoading: true })
     axios.post("http://localhost:8000/api/userinfo", {
+    // axios.post("https://www.alacar.tech:2053/api/userinfo", {
       weight: this.props.weight,
       gender: this.props.gender,
       age: this.props.age,
